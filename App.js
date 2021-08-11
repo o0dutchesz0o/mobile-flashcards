@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import DeckListView from "./components/DeckListView";
+import { decks } from "./utils/_DATA";
+import Constants from 'expo-constants';
+import { teal } from "./utils/colors";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+function MFStatusBar({backgroundColor, ...props}) {
+  return(
+    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
     </View>
-  );
+  )
+}
+
+export default class App extends React.Component {
+  state = {
+    decks: decks
+  }
+  render() {
+    const {decks} = this.state
+    return (
+      <View style={styles.container}>
+        <MFStatusBar backgroundColor={teal} barStyle='light-content'/>
+        <DeckListView decks={decks}/>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
