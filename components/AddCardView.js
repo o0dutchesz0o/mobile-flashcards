@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input } from 'react-native-elements';
 import {gray, purple, teal, white} from "../utils/colors";
-import AddCardView from "./AddCardView";
 
-export default class AddDeckView extends Component {
+export default class AddCardView extends Component {
   state = {
-    title: ''
+    question: '',
+    answer: ''
   }
 
   handleChange = (e) => {
-    const title = e.target.value
-    this.setState(() => ({
-      title
-    }))
+    // TODO update to handle question and answer
+    // const text = e.target.value
+    // this.setState(() => ({
+    //   text
+    // }))
   }
 
 
   handleSubmit = (e) => {
-    // TODO - wire up
     // e.preventDefault()
     // const { text } = this.state
     // const { dispatch, id} = this.props
@@ -31,18 +31,24 @@ export default class AddDeckView extends Component {
   }
 
   render () {
-    const { title } = this.state
+    const { question, answer } = this.state
     return (
       <View>
-        <Text style={styles.header}>Add New Deck</Text>
+        <Text style={styles.header}>Add New Card</Text>
         <Input style={styles.input}
-          label='Title'
-          placeholder='Enter title here'
-          value={title}
-          onChangeText={this.handleChange}
+               label='Question'
+               placeholder='Enter question here'
+               value={question}
+               onChangeText={this.handleChange}
+        />
+        <Input style={styles.input}
+               label='Answer'
+               placeholder='Enter answer here'
+               value={answer}
+               onChangeText={this.handleChange}
         />
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create Deck</Text>
+          <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
       </View>
     )
