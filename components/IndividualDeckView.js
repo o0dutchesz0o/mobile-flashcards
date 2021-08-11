@@ -14,9 +14,10 @@ export default class IndividualDeckView extends Component {
         <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>Add Card</Text>
         </TouchableOpacity>
+        {questions.length > 0 &&
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Start Quiz</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <QuizView questions={questions}/>
       </View>
     )
