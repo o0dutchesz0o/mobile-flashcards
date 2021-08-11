@@ -5,11 +5,11 @@ import QuizView from "./QuizView";
 
 export default class IndividualDeckView extends Component {
   render () {
-    const {title, questions, cards } = this.props
+    const {title, questions, cards } = this.props.route.params
     debugger
     return (
       <View>
-        <Text style={styles.deckTitle}>Deck Name: {title}</Text>
+        <Text style={styles.deckTitle}>{title}</Text>
         <Text style={styles.questions}>{questions.length} {cards}</Text>
         <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>Add Card</Text>

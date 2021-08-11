@@ -14,15 +14,22 @@ export default class DeckListView extends Component {
     const {decks} = this.state
     return (
       <View>
-        <Text style={styles.header}>Decks Header</Text>
+        <Text style={styles.header}/>
         {Object.keys(decks).map((deck) => {
           const { title, questions} = decks[deck]
           const cards = questions.length === 1 ? 'card' : 'cards'
           return (
             <View style={styles.container} key={generateUID()}>
-              <Text style={styles.deckTitle}>Deck Name: {title}</Text>
-              <Text style={styles.questions}>{questions.length} {cards}</Text>
-              <IndividualDeckView title={title} questions={questions} cards={cards}/>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('IndividualDeck',
+                {
+                  title: title,
+                  questions: questions,
+                  cards: cards
+                }
+              )}>
+                <Text style={styles.deckTitle}>{title}</Text>
+                <Text style={styles.questions}>{questions.length} {cards}</Text>
+              </TouchableOpacity>
             </View>
           )
         })}
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: teal,
-    fontSize: 30,
+    fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center',
   },
