@@ -1,7 +1,8 @@
 import React, { Component} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { teal, purple, gray, white } from "../utils/colors";
-
+import { teal, purple, gray } from "../utils/colors";
+import { generateUID } from "../utils/helpers";
+import IndividualDeckView from "./IndividualDeckView";
 export default class DeckListView extends Component {
   render () {
     const { decks } = this.props
@@ -12,30 +13,10 @@ export default class DeckListView extends Component {
           const { title, questions} = decks[deck]
           const cards = questions.length === 1 ? 'card' : 'cards'
           return (
-            <View style={styles.container}>
+            <View style={styles.container} key={generateUID()}>
               <Text style={styles.deckTitle}>Deck Name: {title}</Text>
               <Text style={styles.questions}>{questions.length} {cards}</Text>
-              <TouchableOpacity style={styles.addButton}>
-                <Text style={styles.addButtonText}>Add Card</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Start Quiz</Text>
-              </TouchableOpacity>
-              {/*//todo MOVE TO COMPONENT*/}
-              {questions.map((question) => {
-                return (
-                  <View>
-                    <Text style={styles.cardQuestion}>{question.cardQuestion}</Text>
-                    <TouchableOpacity style={styles.button}>
-                      <Text style={styles.buttonText}>Check Answer</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.cardAnswer}>{question.cardAnswer}</Text>
-                    <TouchableOpacity style={styles.button}>
-                      <Text style={styles.buttonText}>Back to Question</Text>
-                    </TouchableOpacity>
-                  </View>
-                )})
-              }
+              <IndividualDeckView title={title} questions={questions} cards={cards}/>
             </View>
           )
         })}
@@ -69,42 +50,5 @@ const styles = StyleSheet.create({
     color: gray,
     fontSize: 15,
     textAlign: 'center',
-  },
-  //TODO MOVE TO COMPONENT
-  cardQuestion: {
-    color: gray,
-    fontSize: 30,
-    textAlign: 'center',
-  },
-  cardAnswer: {
-    color: teal,
-    fontSize: 30,
-    textAlign: 'center',
-    paddingLeft: 20,
-    paddingRight: 20
-  },
-  button: {
-    padding: 10,
-    backgroundColor: purple,
-    alignSelf: 'center',
-    borderRadius: 10,
-    margin: 5,
-  },
-  buttonText :{
-    color: white,
-    fontSize: 20,
-  },
-  addButton: {
-    padding: 10,
-    // backgroundColor: teal,
-    alignSelf: 'center',
-    borderWidth: 2,
-    borderColor: teal,
-    borderRadius: 10,
-    margin: 10,
-  },
-  addButtonText :{
-    color: teal,
-    fontSize: 20,
   },
 })
