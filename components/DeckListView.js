@@ -1,11 +1,17 @@
 import React, { Component} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { decks } from "../utils/_DATA.js";
 import { teal, purple, gray } from "../utils/colors";
 import { generateUID } from "../utils/helpers";
 import IndividualDeckView from "./IndividualDeckView";
+
 export default class DeckListView extends Component {
+  state = {
+    decks: decks
+  }
+
   render () {
-    const { decks } = this.props
+    const {decks} = this.state
     return (
       <View>
         <Text style={styles.header}>Decks Header</Text>
