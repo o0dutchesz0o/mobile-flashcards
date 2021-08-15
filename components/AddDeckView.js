@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input } from 'react-native-elements';
 import {gray, purple, teal, white} from "../utils/colors";
-import {NavigationActions} from "react-navigation";
 import {formatDeckKey} from "../utils/helpers";
 import {submitDeck} from "../utils/api";
-import { addDeck} from "../actions";
+import {addDeck} from "../actions";
 
 function SubmitBtn({ onPress }) {
   return (
@@ -47,12 +46,9 @@ class AddDeckView extends Component {
     this.toHome()
 
     submitDeck( {deck, key})
-
   }
 
   toHome = () => {
-    //todo set this up correct
-    debugger
     this.props.navigation.navigate('Home', { screen: 'Decks' })
   }
 
