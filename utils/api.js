@@ -3,7 +3,7 @@ import { DECK_STORAGE_KEY, formatDeckResults } from "./_DATA";
 
 export function submitDeck ({deck, key}) {
   //add entry to our db (AsyncStorage)
-  debugger
+
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
     [key]: deck
   }))

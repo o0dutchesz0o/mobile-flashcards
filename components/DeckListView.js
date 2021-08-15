@@ -2,10 +2,10 @@ import React, { Component} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { teal, purple, gray } from "../utils/colors";
-import { generateUID } from "../utils/helpers";
-import { fetchDecks } from "../utils/api";
+import {formatDeckKey} from "../utils/helpers";
+import {fetchDecks, removeDeck} from "../utils/api";
 import { AppLoading } from 'expo'
-import {receiveDecks} from "../actions";
+import {receiveDecks, deleteDeck} from "../actions";
 
 class DeckListView extends Component {
   state = {
@@ -19,6 +19,14 @@ class DeckListView extends Component {
       .then(() => this.setState(() => ({
         ready: true
       })))
+  }
+
+  handleDelete = (title) => {
+    const key = formatDeckKey(title)
+
+    this.props.dispatch(deleteDeck(key))
+
+    removeDeck(key)
   }
 
   render () {
@@ -35,17 +43,21 @@ class DeckListView extends Component {
         {Object.keys(decks).map((deck) => {
           const { title, questions} = decks[deck]
           const cards = questions.length === 1 ? 'card' : 'cards'
+
           return (
-            <View style={styles.container} key={generateUID()}>
+            <View style={styles.container} key={deck}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('IndividualDeck',
                 {
                   title: title,
                   questions: questions,
-                  cards: cards
+                  cards: cards,
                 }
               )}>
                 <Text style={styles.deckTitle}>{title}</Text>
                 <Text style={styles.questions}>{questions.length} {cards}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.handleDelete(title)}>
+                <Text style={styles.deleteBtnText}>Delete Deck</Text>
               </TouchableOpacity>
             </View>
           )
@@ -81,12 +93,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
   },
+  deleteBtnText :{
+    color: purple,
+    fontSize: 15,
+    textAlign: 'center',
+    paddingTop: 15,
+    paddingBottom: 5
+  },
 })
 
 function mapStateToProps(decks) {
-  return {
-    decks
-  }
+  return decks
 }
 
 export default connect(mapStateToProps)(DeckListView)

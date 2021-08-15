@@ -6,7 +6,7 @@ import QuizView from "./QuizView";
 export default class IndividualDeckView extends Component {
   render () {
     const {title, questions, cards } = this.props.route.params
-    debugger
+
     return (
       <View>
         <Text style={styles.deckTitle}>{title}</Text>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     color: purple,
     fontSize: 20,
     textAlign: 'center',
-    paddingTop: 10,
+    paddingTop: 50,
   },
   questions: {
     color: gray,

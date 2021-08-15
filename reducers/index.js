@@ -1,6 +1,7 @@
-import { RECEIVE_DECKS, ADD_DECK } from "../actions";
+import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK } from "../actions";
+import {initialState} from "../utils/_DATA";
 
-function decks( state={}, action) {
+function decks( state= initialState, action) {
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
@@ -11,6 +12,13 @@ function decks( state={}, action) {
       return {
         ...state,
         ...action.deck
+      }
+    case DELETE_DECK:
+      let copy = Object.assign({}, state)
+      delete copy["decks"][action.deck]
+      return {
+        ...state,
+        copy
       }
     default:
       return state

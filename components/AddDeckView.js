@@ -34,7 +34,7 @@ class AddDeckView extends Component {
   handleSubmit = (e) => {
     const key = formatDeckKey(this.state.title)
     const deck = this.state
-    debugger
+
     this.props.dispatch(addDeck({
       [key]: deck
     }))
