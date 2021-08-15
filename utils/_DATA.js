@@ -1,3 +1,5 @@
+export const DECK_STORAGE_KEY = 'MobileFlashcards:deck'
+
 export let decks = {
   ReactNative: {
     title: 'React Native',
@@ -23,4 +25,8 @@ export let decks = {
         cardAnswer: 'The combination of a function and the lexical environment within which that function was declared.'}
     ]
   },
+}
+
+export function formatDeckResults ( results ) {
+  return decks
 }

@@ -51,7 +51,9 @@ class AddDeckView extends Component {
   }
 
   toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}))
+    //todo set this up correct
+    debugger
+    this.props.navigation.navigate('Home', { screen: 'Decks' })
   }
 
   render () {
