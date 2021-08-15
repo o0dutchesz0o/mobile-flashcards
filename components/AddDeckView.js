@@ -1,16 +1,31 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input } from 'react-native-elements';
 import {gray, purple, teal, white} from "../utils/colors";
-import AddCardView from "./AddCardView";
+import {NavigationActions} from "react-navigation";
+import {formatDeckKey} from "../utils/helpers";
+import {submitDeck} from "../utils/api";
+import { addDeck} from "../actions";
 
-export default class AddDeckView extends Component {
+function SubmitBtn({ onPress }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.submitBtn}>
+      <Text style={styles.submitBtnText}>Create Deck</Text>
+    </TouchableOpacity>
+  )
+}
+
+class AddDeckView extends Component {
   state = {
-    title: ''
+    title: '',
+    questions: []
   }
 
   handleChange = (e) => {
-    const title = e.target.value
+    const title = e
     this.setState(() => ({
       title
     }))
@@ -18,16 +33,25 @@ export default class AddDeckView extends Component {
 
 
   handleSubmit = (e) => {
-    // TODO - wire up
-    // e.preventDefault()
-    // const { text } = this.state
-    // const { dispatch, id} = this.props
-    //
-    // dispatch(handleAddTweet(text, id))
-    // this.setState(() => ({
-    //   text: '',
-    //   toHome: !id
-    // }))
+    const key = formatDeckKey(this.state.title)
+    const deck = this.state
+    debugger
+    this.props.dispatch(addDeck({
+      [key]: deck
+    }))
+    this.setState( () => ({
+      title: '',
+      questions: []
+    }))
+
+    this.toHome()
+
+    submitDeck( {deck, key})
+
+  }
+
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}))
   }
 
   render () {
@@ -41,9 +65,7 @@ export default class AddDeckView extends Component {
           value={title}
           onChangeText={this.handleChange}
         />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create Deck</Text>
-        </TouchableOpacity>
+        <SubmitBtn onPress={this.handleSubmit} />
       </View>
     )
   }
@@ -65,16 +87,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 50 //TODO CHANGE TO FLEX
   },
-  button: {
-    padding: 10,
+  submitBtn: {
+    padding: 12,
     backgroundColor: purple,
     alignSelf: 'center',
     borderRadius: 10,
     margin: 5,
     marginTop: 25 //TODO CHANGE TO FLEX
   },
-  buttonText :{
+  submitBtnText: {
     color: white,
     fontSize: 20,
-  },
+    textAlign: 'center'
+  }
 })
+
+function mapStateToProps(state) {
+  return state
+}
+
+export default connect(mapStateToProps)(AddDeckView)

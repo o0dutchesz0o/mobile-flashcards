@@ -1,17 +1,34 @@
 import React, { Component} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { decks } from "../utils/_DATA.js";
+import { connect } from 'react-redux'
 import { teal, purple, gray } from "../utils/colors";
 import { generateUID } from "../utils/helpers";
-import IndividualDeckView from "./IndividualDeckView";
+import { fetchDecks } from "../utils/api";
+import { AppLoading } from 'expo'
+import {receiveDecks} from "../actions";
 
-export default class DeckListView extends Component {
+class DeckListView extends Component {
   state = {
-    decks: decks
+    ready: false
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    fetchDecks()
+      .then((decks) => dispatch(receiveDecks(decks)))
+      .then(() => this.setState(() => ({
+        ready: true
+      })))
   }
 
   render () {
-    const {decks} = this.state
+    const { decks } = this.props
+    const { ready } = this.state
+
+    if ( ready === 'false' ) {
+      return <AppLoading/>
+    }
+
     return (
       <View>
         <Text style={styles.header}/>
@@ -65,3 +82,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 })
+
+function mapStateToProps(decks) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(DeckListView)

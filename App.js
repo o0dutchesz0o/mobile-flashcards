@@ -11,6 +11,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from './reducers'
 
 function MFStatusBar({backgroundColor, ...props}) {
   return(
@@ -98,11 +101,17 @@ const MainNav = () => (
 
 export default class App extends React.Component {
   render() {
+    const store = createStore(reducer);
+
     return (
-      <NavigationContainer style={styles.container}>
-        <MFStatusBar backgroundColor={teal} barStyle='light-content'/>
-        <MainNav/>
-      </NavigationContainer>
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <MFStatusBar backgroundColor={teal} barStyle='light-content'/>
+          <NavigationContainer style={styles.container}>
+            <MainNav/>
+          </NavigationContainer>
+        </View>
+      </Provider>
     )
   }
 }
