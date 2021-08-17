@@ -1,11 +1,21 @@
 import { AsyncStorage } from 'react-native'
-import { DECK_STORAGE_KEY, formatDeckResults } from "./_DATA";
+import {DECK_STORAGE_KEY, formatDeckResults, initialState} from "./_DATA";
 
 export function submitDeck ({deck, key}) {
   //add entry to our db (AsyncStorage)
 
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
     [key]: deck
+  }))
+}
+
+export function submitCard({cardQuestion, cardAnswer}, key) {
+  //add entry to our db (AsyncStorage)
+  const newCard = { cardQuestion, cardAnswer}
+  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+    [key]: {
+      questions: {newCard}
+    }
   }))
 }
 
@@ -21,6 +31,6 @@ export function removeDeck (key) {
 }
 
 export function fetchDecks () {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+  return AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(initialState))
     .then(formatDeckResults)
 }

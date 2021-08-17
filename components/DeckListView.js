@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps(decks) {
-  return decks
+function mapStateToProps(state) {
+  return {decks : state}
 }
 
 export default connect(mapStateToProps)(DeckListView)

@@ -2,52 +2,81 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input } from 'react-native-elements';
 import {gray, purple, teal, white} from "../utils/colors";
+import {formatDeckKey} from "../utils/helpers";
+import {submitCard} from "../utils/api";
+import {connect} from "react-redux";
+import {addCard} from "../actions";
 
-export default class AddCardView extends Component {
+class AddCardView extends Component {
   state = {
-    question: '',
-    answer: ''
+    cardQuestion: '',
+    cardAnswer: ''
   }
 
-  handleChange = (e) => {
-    // TODO update to handle question and answer
-    // const text = e.target.value
-    // this.setState(() => ({
-    //   text
-    // }))
+  handleChange = (e, id) => {
+    this.setState(() => ({
+      [id]: e
+    }))
   }
 
 
   handleSubmit = (e) => {
-    // e.preventDefault()
-    // const { text } = this.state
-    // const { dispatch, id} = this.props
-    //
-    // dispatch(handleAddTweet(text, id))
-    // this.setState(() => ({
-    //   text: '',
-    //   toHome: !id
-    // }))
+    const {title} = this.props.route.params
+    const key = formatDeckKey(title)
+
+    const {cardQuestion, cardAnswer } = this.state
+
+    this.props.dispatch(addCard({
+      cardQuestion,
+      cardAnswer
+    }, key))
+
+    this.toHome()
+
+    submitCard( {
+      cardQuestion,
+      cardAnswer
+    }, key)
+
+    this.setState( () => ({
+      cardQuestion: '',
+      cardAnswer: ''
+    }))
+  }
+
+  toHome = () => {
+    this.props.navigation.navigate('Home', { screen: 'Decks' })
   }
 
   render () {
-    const { question, answer } = this.state
+    const { cardQuestion, cardAnswer } = this.state
+    debugger
+    const { decks } = this.props
+    const {title} = this.props.route.params
+    const deckKey = formatDeckKey(title)
+
     return (
       <View>
         <Text style={styles.header}>Add New Card</Text>
         <Input style={styles.input}
-               label='Question'
+               id='cardQuestion'
+               label="Question"
                placeholder='Enter question here'
-               value={question}
-               onChangeText={this.handleChange}
+               value={cardQuestion}
+               onChangeText={(e) => this.handleChange(e, 'cardQuestion')}
         />
         <Input style={styles.input}
-               label='Answer'
+               id='cardAnswer'
+               label="Answer"
                placeholder='Enter answer here'
-               value={answer}
-               onChangeText={this.handleChange}
+               value={cardAnswer}
+               onChangeText={(e) => this.handleChange(e,'cardAnswer')}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.handleSubmit}
+        >
+
           <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
       </View>
@@ -84,3 +113,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 })
+
+function mapStateToProps(state) {
+  return state
+}
+
+export default connect(mapStateToProps)(AddCardView)

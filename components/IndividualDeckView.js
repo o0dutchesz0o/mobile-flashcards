@@ -11,7 +11,13 @@ export default class IndividualDeckView extends Component {
       <View>
         <Text style={styles.deckTitle}>{title}</Text>
         <Text style={styles.questions}>{questions.length} {cards}</Text>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => this.props.navigation.navigate('AddCard',
+          {
+            title: title,
+          }
+        )}>
           <Text style={styles.addButtonText}>Add Card</Text>
         </TouchableOpacity>
         {questions.length > 0 &&

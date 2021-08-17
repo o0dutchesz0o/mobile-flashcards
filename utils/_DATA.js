@@ -1,7 +1,6 @@
 export const DECK_STORAGE_KEY = 'MobileFlashcards:deck'
 
 export let initialState = {
-  decks: {
     ReactNative: {
       title: 'React Native',
       questions: [
@@ -27,7 +26,6 @@ export let initialState = {
       ]
     },
   }
-}
 
 export function formatDeckResults () {
   return initialState

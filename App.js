@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, StatusBar, Platform } from 'react-native';
 import DeckListView from "./components/DeckListView";
 import AddDeckView from "./components/AddDeckView";
 import IndividualDeckView from "./components/IndividualDeckView";
+import AddCardView from './components/AddCardView'
 import Constants from 'expo-constants';
 import {teal, purple, white, lightPurple} from "./utils/colors";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -90,12 +91,24 @@ const StackConfig = {
       title: 'Deck',
     },
   },
+  AddCard: {
+    name: 'AddCard',
+    component: AddCardView,
+    options: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+      title: 'Add Card',
+    },
+  },
 };
 const Stack = createStackNavigator();
 const MainNav = () => (
   <Stack.Navigator {...StackNavigatorConfig}>
     <Stack.Screen {...StackConfig['TabNav']} />
     <Stack.Screen {...StackConfig['IndividualDeck']} />
+    <Stack.Screen {...StackConfig['AddCard']} />
   </Stack.Navigator>
 );
 

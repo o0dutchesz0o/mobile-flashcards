@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK } from "../actions";
+import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK, ADD_CARD } from "../actions";
 import {initialState} from "../utils/_DATA";
 
 function decks( state= initialState, action) {
@@ -14,12 +14,19 @@ function decks( state= initialState, action) {
         ...action.deck
       }
     case DELETE_DECK:
-      let copy = Object.assign({}, state)
-      delete copy["decks"][action.deck]
+      delete state[action.deck]
+      return {
+        ...state
+      }
+    case ADD_CARD:
+      debugger
       return {
         ...state,
-        copy
-      }
+        [action.key]: {
+          ...state[action.key],
+              questions: state[action.key].questions.concat([action.newCard])
+          }
+        }
     default:
       return state
   }
