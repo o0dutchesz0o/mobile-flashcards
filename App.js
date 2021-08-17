@@ -5,6 +5,7 @@ import DeckListView from "./components/DeckListView";
 import AddDeckView from "./components/AddDeckView";
 import IndividualDeckView from "./components/IndividualDeckView";
 import AddCardView from './components/AddCardView'
+import QuizView from "./components/QuizView";
 import Constants from 'expo-constants';
 import {teal, purple, white, lightPurple} from "./utils/colors";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -102,6 +103,17 @@ const StackConfig = {
       title: 'Add Card',
     },
   },
+  QuizView: {
+    name: 'QuizView',
+    component: QuizView,
+    options: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+      title: 'Quiz',
+    },
+  },
 };
 const Stack = createStackNavigator();
 const MainNav = () => (
@@ -109,6 +121,7 @@ const MainNav = () => (
     <Stack.Screen {...StackConfig['TabNav']} />
     <Stack.Screen {...StackConfig['IndividualDeck']} />
     <Stack.Screen {...StackConfig['AddCard']} />
+    <Stack.Screen {...StackConfig['QuizView']} />
   </Stack.Navigator>
 );
 
