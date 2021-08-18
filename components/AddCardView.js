@@ -31,7 +31,7 @@ class AddCardView extends Component {
       cardAnswer
     }, key))
 
-    this.toHome()
+    this.toDeck()
 
     submitCard( {
       cardQuestion,
@@ -48,12 +48,13 @@ class AddCardView extends Component {
     this.props.navigation.navigate('Home', { screen: 'Decks' })
   }
 
+  toDeck = () => {
+    const { title } = this.props.route.params
+    this.props.navigation.navigate('IndividualDeck', { title: title })
+  }
+
   render () {
     const { cardQuestion, cardAnswer } = this.state
-    debugger
-    const { decks } = this.props
-    const {title} = this.props.route.params
-    const deckKey = formatDeckKey(title)
 
     return (
       <View>
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state) {
-  return state
+  return {decks : state}
 }
 
 export default connect(mapStateToProps)(AddCardView)

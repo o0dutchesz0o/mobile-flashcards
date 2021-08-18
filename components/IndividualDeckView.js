@@ -2,22 +2,24 @@ import React, { Component } from "react";
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import {gray, purple, teal, white} from "../utils/colors";
 import QuizView from "./QuizView";
+import {connect} from "react-redux";
 
-export default class IndividualDeckView extends Component {
+class IndividualDeckView extends Component {
   render () {
-    const {title, questions, cards } = this.props.route.params
+    const { title } = this.props.route.params
+    const { decks } = this.props
+    const deck = decks[title]
+    const questions = deck.questions
+    const cards = questions.length === 1 ? 'card' : 'cards'
 
+    debugger
     return (
       <View>
         <Text style={styles.deckTitle}>{title}</Text>
         <Text style={styles.questions}>{questions.length} {cards}</Text>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => this.props.navigation.navigate('AddCard',
-          {
-            title: title,
-          }
-        )}>
+          onPress={() => this.props.navigation.navigate('AddCard', { title: title })}>
           <Text style={styles.addButtonText}>Add Card</Text>
         </TouchableOpacity>
         {questions.length > 0 &&
@@ -72,3 +74,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 })
+
+function mapStateToProps(state) {
+  return {decks : state}
+}
+
+export default connect(mapStateToProps)(IndividualDeckView)

@@ -46,13 +46,7 @@ class DeckListView extends Component {
 
           return (
             <View style={styles.container} key={deck}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('IndividualDeck',
-                {
-                  title: title,
-                  questions: questions,
-                  cards: cards,
-                }
-              )}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('IndividualDeck', { title: title })}>
                 <Text style={styles.deckTitle}>{title}</Text>
                 <Text style={styles.questions}>{questions.length} {cards}</Text>
               </TouchableOpacity>

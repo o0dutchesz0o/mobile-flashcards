@@ -43,13 +43,13 @@ class AddDeckView extends Component {
       questions: []
     }))
 
-    this.toHome()
+    this.toDeck()
 
     submitDeck( {deck, key})
   }
 
-  toHome = () => {
-    this.props.navigation.navigate('Home', { screen: 'Decks' })
+  toDeck = () => {
+    this.props.navigation.navigate('IndividualDeck', { title: this.state.title })
   }
 
   render () {
